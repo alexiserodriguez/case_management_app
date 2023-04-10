@@ -1,0 +1,171 @@
+{% extends 'base.html' %} {% block content %}
+<main class="container">
+  <div ="row">
+    <div class="col-md-10 offset-md-1">
+      <h1 class="text-center display-5 py-5">Detalle de procedimiento</h1>
+      <ul class="list-group">
+        <li class="list-group-item px-5 py-5">
+          <header class="d-flex justify-content-between mb-3">
+            <p class="fw-bold fs-6 justify-content-center">
+              Creado: {{case.created}}
+            </p>
+            <button class="btn btn-success">
+              <a
+                href="{% url 'edit_case' case.id%}"
+                class="text-white text-decoration-none"
+                >Editar</a
+              >
+            </button>
+          </header>
+          <h1 class="fw-bold text-primary mb-4">{{case.name}}</h1>
+          <div class="d-flex justify-content-between">
+            <div class="d-flex flex-column">
+              <p class="fw-bold">Comenzó el:</p>
+              <p>{{case.start_date}}</p>
+              <p class="fw-bold">Demandante:</p>
+              <p>{{case.demandante}}</p>
+              <p class="fw-bold">Demandado:</p>
+              <p>{{case.demandado}}</p>
+            </div>
+
+            <div class="d-flex flex-column">
+              <p class="fw-bold">Juzgado:</p>
+              <p>{{case.juzgado}}</p>
+              <p class="fw-bold">Partido judicial:</p>
+              <p>{{case.partido_judicial}}</p>
+              <p class="fw-bold">Fase:</p>
+              <p>{{case.phase}}</p>
+            </div>
+            <div class="d-flex flex-column">
+              <p class="fw-bold">Abogados propios:</p>
+
+              {% for lawyer in case.lawyers.all %}
+              <p>{{lawyer}}</p>
+              {% endfor %}
+
+              <p class="mt-3 fw-bold">Abogados contrarios:</p>
+              <p>{{case.cont_lawyer_one}}</p>
+              <p>{{case.cont_lawyer_two}}</p>
+              <p>{{case.cont_lawyer_three}}</p>
+            </div>
+            <div class="d-flex flex-column">
+              <div class="d-flex flex-column">
+                <p class="fw-bold">Procuradores propios:</p>
+
+                <p>{{case.procurador_one}}</p>
+                <p>{{case.procurador_two}}</p>
+                <p>{{case.procurador_three}}</p>
+
+                <p class="mt-3 fw-bold">Procuradores contrarios:</p>
+                <p>{{case.pc_one}}</p>
+                <p>{{case.pc_two}}</p>
+                <p>{{case.pc_three}}</p>
+              </div>
+              <div class="d-flex flex-column"></div>
+            </div>
+          </div>
+          <div>
+            <p class="fw-bold mt-3">Descripción</p>
+            <p>{{case.description}}</p>
+          </div>
+        </li>
+      </ul>
+      <div class="my-3">
+        <div class="d-flex flex-column">
+          <ul class="list-group">
+            <li class="list-group-item flex-fill p-5">
+              <div class="d-flex flex-column">
+                <header class="d-flex flex-row justify-content-between">
+                  <h2>Comentarios:</h2>
+                  <button class="btn btn-primary">
+                    <a
+                      href="{% url 'create_comment' case.id %}"
+                      class="text-white text-decoration-none"
+                      >Añadir</a
+                    >
+                  </button>
+                </header>
+
+                <div class="mb-3">
+                  {% for comment in comments.all %}
+                  <li class="list-group-item p-4">
+                    <div class="d-flex flex-row">
+                      <p class="fw-bold mb-0">{{comment.created}}:</p>
+                      <p class="ms-2 mb-0">{{comment.comment}}</p>
+                    </div>
+                  </li>
+                  {% endfor %}
+                </div>
+              </div>
+            </li>
+          </ul>
+
+          <ul class="list-group mt-3">
+            <li class="list-group-item flex-fill p-5">
+              <header class="d-flex flex-row justify-content-between">
+                <h2>Presentaciones:</h2>
+                <button class="btn btn-primary">
+                  <a
+                    href="{% url 'create_presentation' case.id %}"
+                    class="text-white text-decoration-none"
+                    >Añadir</a
+                  >
+                </button>
+              </header>
+            </li>
+            {% for i in presentations.all %}
+
+            <li class="list-group-item p-4">
+              <div class="d-flex flex-column mb-0">
+                <p class="fw-bold">{{i.presentation_date}}</p>
+                <p class="mb-0">{{i.description}}</p>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+          <ul class="list-group my-3">
+            <li class="list-group-item flex-fill p-5">
+              <header class="d-flex flex-row justify-content-between">
+                <h3>Documentos:</h3>
+                <button class="btn btn-primary">
+                  <a
+                    href="{% url 'upload_doc' case.id %}"
+                    class="text-white text-decoration-none"
+                    >Añadir</a
+                  >
+                </button>
+              </header>
+            </li>
+
+            {% for i in docs.all %}
+            <li class="list-group-item">
+              <div
+                class="d-flex flex-column justify-content-center align-items-center gap-3"
+              >
+                <p class="fw-bold mt-3">{{i.title}}</p>
+                <img
+                  src="{{i.doc.url}}"
+                  alt="{{i.title}}"
+                  height="500"
+                  width="500"
+                />
+                <div>
+                  <button class="btn btn-danger">
+                    <a
+                      href="{% url 'delete_doc' i.pk %}"
+                      class="text-white text-decoration-none"
+                      >Eliminar</a
+                    >
+                  </button>
+                </div>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

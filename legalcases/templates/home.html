@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block content %}
+<main class="container py-5 mx-auto">
+  <section class="card card-body">
+    <div class="col-md-8 offset-md-2">
+      <h1 class="display-4 text-center py-3">
+        Bienvenido a la Legal Cases Management App
+      </h1>
+      <div class="py-5">
+
+          <p class="fs-5">
+            A través de su cuenta podrá acceder a los procedimientos legales que lo incluyen, así como crear casos nuevos con las características que requiera. 
+          </p>
+          <p class="fs-5">
+            Entre los datos, podrá añadir los diferentes campos como fecha de inicio, tipo de procedimiento, demandado, demandante, juzgado, fase del procedimiento, abogados propios y contrarios, procuradores y contrarios, y una descripción detallada del mismo. 
+          </p>
+          <p class="fs-5">De igual forma, pueden añadirse comentarios, hacer seguimiento de las presentaciones añadidas, y gestionar documentos correspondientes a cada caso</p>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="text-center mb-3">
+        <a class="btn btn-secondary fs-5 px-3 py-2" href="/cases/"> Ver procedimientos</a>
+        <a class="btn btn-primary fs-5 px-3 py-2" href="/cases/create"> Crear procedimiento </a>
+      </div>
+      {% else %}
+      <div class="text-center mb-3">
+        <a class="btn btn-secondary fs-5 px-3 py-2" href="/signin/"> Iniciar sesión </a>
+        <a class="btn btn-primary fs-5 px-3 py-2" href="/signup/"> Registrarse </a>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+</main>
+{% endblock %}
